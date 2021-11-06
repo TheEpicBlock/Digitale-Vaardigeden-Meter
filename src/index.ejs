@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8"/>
+    <title><%= htmlWebpackPlugin.options.title %></title>
+    
+    <!-- Inline all css files -->
+    <% for (var css in htmlWebpackPlugin.files.css) { %>
+    <style>
+        <%= compilation.assets[htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+    </style>
+    <% } %>
+    
+    <!-- Inline all js files -->
+    <% for (var js in htmlWebpackPlugin.files.js) { %>
+    <script>
+        <%= compilation.assets[htmlWebpackPlugin.files.js[js].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
+    </script>
+    <% } %>
+    
+  </head>
+  <body>
+    <h1>Tetst</h1>
+  </body>
+</html>
