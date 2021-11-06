@@ -30,6 +30,7 @@ module.exports = {
       alwaysWriteToDisk: (process.env.DEV_SERVER == "true"),
       template: 'src/index.ejs',
       inject: false,
+      canonical_url: process.env.CANONICAL_URL,
     }),
     new HtmlWebpackHarddiskPlugin(),
     new MiniCssExtractPlugin()

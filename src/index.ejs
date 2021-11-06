@@ -1,10 +1,24 @@
+
+<!-- Retrieve meta options from src/options.json -->
+<% var options = require("./options.json") %>
+<% var isDev = webpackConfig.mode == "development" %>
+
 <!DOCTYPE html>
-<html>
+<html lang="<%= options.locale %>">
   <head>
     <meta charset="utf-8"/>
-    <title><%= htmlWebpackPlugin.options.title %></title>
     
-    <% var isDev = webpackConfig.mode == "development" %>
+    <!-- Set various meta tags -->
+    <title><%= options.title %></title>
+    <meta property="og:title" content="<%= options.title %>"/>
+    <meta name="description" content="<%= options.description %>"/>
+    <meta property="og:locale" content="<%= options.locale %>"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta property="og:type" content="website"/>
+    
+    <% if (htmlWebpackPlugin.options.canonical_url) { %>
+        <meta property="og:url" content="<%= htmlWebpackPlugin.options.canonical_url %>"/>
+    <% } %>
     
     <!-- Include css and js-->
     <% if (isDev) { %>
