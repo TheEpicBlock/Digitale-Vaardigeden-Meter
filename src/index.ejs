@@ -4,22 +4,26 @@
     <meta charset="utf-8"/>
     <title><%= htmlWebpackPlugin.options.title %></title>
     
-    <!-- Inline all css files -->
-    <% for (var css in htmlWebpackPlugin.files.css) { %>
-    <style>
-        <%= compilation.assets[htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
-    </style>
-    <% } %>
+    <% var isDev = webpackConfig.mode == "development" %>
     
-    <!-- Inline all js files -->
-    <% for (var js in htmlWebpackPlugin.files.js) { %>
-    <script>
-        <%= compilation.assets[htmlWebpackPlugin.files.js[js].substr(htmlWebpackPlugin.files.publicPath.length)].source() %>
-    </script>
+    <!-- Include css and js-->
+    <% if (isDev) { %>
+        <!-- Reference css and js files when in dev -->
+        <% for (var css in htmlWebpackPlugin.files.css) { %><link href="<%= htmlWebpackPlugin.files.css[css] %>" rel="stylesheet"><% } %>
+        <% for (var js in htmlWebpackPlugin.files.js) { %><script src="<%= htmlWebpackPlugin.files.js[js] %>"></script><% } %>
+    <% } else { %>
+        <!-- Inline css and js files when in prod -->
+        <% for (var css in htmlWebpackPlugin.files.css) { %>
+            <style><%= compilation.assets[htmlWebpackPlugin.files.css[css].substr(htmlWebpackPlugin.files.publicPath.length)].source() %></style>
+        <% } %>
+    
+        <% for (var js in htmlWebpackPlugin.files.js) { %>
+            <script><%= compilation.assets[htmlWebpackPlugin.files.js[js].substr(htmlWebpackPlugin.files.publicPath.length)].source() %></script>
+        <% } %>
     <% } %>
     
   </head>
   <body>
-    <h1>Tetst</h1>
+    <h1>Hallo</h1>
   </body>
 </html>
