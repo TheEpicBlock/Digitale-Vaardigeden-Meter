@@ -1,0 +1,58 @@
+noscript {
+    color: red;
+    font-weight: bold;
+}
+
+body {
+    color: #191919;
+}
+
+.page {
+    position: absolute;
+    display: none;
+}
+
+#start {
+    h1 {
+        font-size: 300%;
+    }
+    button {
+        font-size: 2em;
+        color: inherit;
+        margin-left: 20vw;
+        margin-top: 10vh;
+        padding: 2mm 5mm;
+        
+        transition: background 0.1s;
+        background: #eee;
+        border: solid;
+        border-color: #aaa;
+        border-radius: 1mm;
+        
+        &:hover {
+            background: #ccc;
+        }
+    }
+}
+
+$fade-time: 2s;
+
+.fading-in {
+    animation: $fade-time fade-in;
+    animation-fill-mode: both;
+}
+
+.fading-out {
+    animation: $fade-time fade-out;
+    animation-fill-mode: both;
+}
+
+@keyframes fade-in {
+  from {opacity: 0%;}
+  to {opacity: 100%;}
+}
+
+@keyframes fade-out {
+  from {opacity: 100%;}
+  to {opacity: 1%;}
+}
