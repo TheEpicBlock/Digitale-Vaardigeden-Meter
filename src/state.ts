@@ -30,9 +30,11 @@ export class StartState implements State {
 export class TestState implements State  {
     type: "test"
     test: Tests.Test
+    htmlRep: HTMLElement | null // The Html representation insided the dom
     
     constructor(test: Tests.Test) {
         this.test = test;
+        this.htmlRep = null;
     }
     
     toUrlString(): String {
@@ -40,7 +42,15 @@ export class TestState implements State  {
     }
     
     setVisibility(animate: boolean, visibility: boolean) {
-        Animate.activateOrDeactivateElement(document.getElementById(this.test.id.toString(16)), animate, visibility);
+        if (this.htmlRep != null) {
+            Animate.activateOrDeactivateElement(this.htmlRep, animate, visibility);
+        } else {
+            var main = document.getElementById("main");
+            var html = this.test.getHtml();
+            main.append(html);
+            Animate.activateOrDeactivateElement(html, animate, visibility);
+            this.htmlRep = html;
+        }
     }
     
     onHtmlMessage(msg: String) {

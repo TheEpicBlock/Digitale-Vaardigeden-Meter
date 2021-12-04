@@ -1,3 +1,6 @@
+$button: #25c8f9;
+$button-hover: #0f98c1;
+
 noscript {
     color: red;
     font-weight: bold;
@@ -5,11 +8,14 @@ noscript {
 
 body {
     color: #191919;
+    margin: 0px;
 }
 
-.page {
+.state {
     position: absolute;
     display: none;
+    width: 100%;
+    height: 100%;
 }
 
 #start {
@@ -48,11 +54,50 @@ $fade-time: 2s;
 }
 
 @keyframes fade-in {
-  from {opacity: 0%;}
-  to {opacity: 100%;}
+    from {opacity: 0%;}
+    to {opacity: 100%;}
 }
 
 @keyframes fade-out {
-  from {opacity: 100%;}
-  to {opacity: 1%;}
+    from {opacity: 100%;}
+    to {opacity: 1%;}
+}
+
+button {
+    background-color: $button;
+    padding: 2mm 5mm;
+    
+    transition: background 0.3s;
+    border: solid;
+    border-radius: 1mm;
+    border-color: darken($button, 10);
+    
+    &:hover {
+        background: $button-hover;
+    }
+    
+    &:focus-visible {
+        background: darken($button-hover, 5);
+        border-color: darken($button, 2);
+        outline-color: darken($button, 2);
+        outline-style: solid;
+    }
+}
+
+.margin-wrapper {
+    padding: 1cm;
+}
+
+.continue-button {
+    position: absolute;
+    bottom: 20%;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.centered-txt {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;
 }

@@ -24,6 +24,6 @@ export function toTest(id: number) {
 export function toNextTest() {
     var state = get();
     if (state instanceof States.TestState) {
-        toTest(state.test.id);
+        toTest(state.test.id+1);
     }
 }
