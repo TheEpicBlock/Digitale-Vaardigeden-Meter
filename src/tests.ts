@@ -1,6 +1,7 @@
 import * as GS from './globalstate'
 import test0 from './tests/0.html'
 import test1 from './tests/1.html'
+import test2 from './tests/2.html'
 
 export interface Test {
     id: number
@@ -36,8 +37,23 @@ const allTests: Array<Test> = [
     },
     {
         id: 1,
-        onHtmlMessage: GS.toNextTest,
+        onHtmlMessage: function(message) {
+            if (message == "continue") {
+                GS.toNextTest();
+            } else if (message == "start") {
+                document.getElementById('desktop').style.display = "none";
+                document.getElementById('start-menu').style.display = "flex";
+            } else if (message == "closestart") {
+                document.getElementById('desktop').style.display = "flex";
+                document.getElementById('start-menu').style.display = "none";
+            }
+        },
         getHtml: htmlFromFile(test1),
+    },
+    {
+        id: 2,
+        onHtmlMessage: GS.toNextTest,
+        getHtml: htmlFromFile(test2),
     }
 ];
 
