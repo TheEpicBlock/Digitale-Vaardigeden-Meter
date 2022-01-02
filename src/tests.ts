@@ -3,6 +3,7 @@ import test0 from './tests/0.html'
 import test1 from './tests/1.html'
 import test2 from './tests/2.html'
 import test3 from './tests/3.html'
+import test4 from './tests/4.html'
 import testend from './tests/end.html'
 
 export interface Test {
@@ -84,6 +85,19 @@ const allTests: Array<Test> = [
     },
     {
         id: 4,
+        onHtmlMessage: function(message) {
+            var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
+            var b = testElementValue("reisplanner-b", "zuiderdiep", true);
+            if (a && b) {
+                GS.toNextTest();
+            } else {
+                // TODO
+            }
+        },
+        getHtml: htmlFromFile(test4),
+    },
+    {
+        id: 5,
         onHtmlMessage: GS.toNextTest,
         getHtml: htmlFromFile(testend),
     }

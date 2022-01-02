@@ -102,6 +102,14 @@ button {
     left: 50%;
 }
 
+.invis-button {
+    position: absolute;
+    border: none;
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+}
+
 // Chrome test things
 
 .desktop-container {
@@ -177,11 +185,31 @@ button {
 }
 
 // Google search things
-.gsearch-container img {
+.web-container {    
+    position: relative;
+}
+
+.web-container img {
     width: 100%;
 }
 
+// Qbuzz things
+.reisplanner {
+    position: absolute;
+    top: 25%;
+    width: 23%;
+    height: 2%;
+    
+    border: none;
+}
 
+#reisplanner-a {
+    left: 21%;
+}
+
+#reisplanner-b {
+    left: 54%;
+}
 // End
 
 .end-header {
