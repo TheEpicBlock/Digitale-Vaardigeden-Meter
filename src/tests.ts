@@ -47,12 +47,12 @@ function testElementValue(id: string, expected: string, ignoreTrailingDot: boole
 
 const allTests: Array<Test> = [
     { // Simple click test
-        id: 0,
+        id: -1,
         onHtmlMessage: GS.toNextTest,
         getHtml: htmlFromFile(test0),
     },
     { // Open chrome
-        id: 1,
+        id: -1,
         onHtmlMessage: function(message) {
             if (message == "continue") {
                 GS.toNextTest();
@@ -67,7 +67,7 @@ const allTests: Array<Test> = [
         getHtml: htmlFromFile(test1),
     },
     { // Gmail
-        id: 2,
+        id: -1,
         onHtmlMessage: function(message) {
             var rec = testElementValue("reciever", "fpcvanmesdag@vanmesdag.nl", false);
             var subj = testElementValue("subject", "hallo", true);
@@ -81,12 +81,12 @@ const allTests: Array<Test> = [
         getHtml: htmlFromFile(test2),
     },
     { // Google
-        id: 3,
+        id: -1,
         onHtmlMessage: GS.toNextTest,
         getHtml: htmlFromFile(test3),
     },
     {
-        id: 4,
+        id: -1,
         onHtmlMessage: function(message) {
             var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
             var b = testElementValue("reisplanner-b", "zuiderdiep", true);
@@ -99,7 +99,7 @@ const allTests: Array<Test> = [
         getHtml: htmlFromFile(test4),
     },
     {
-        id: 5,
+        id: -1,
         onHtmlMessage: function(message) {
             if (message == "right") {
                 GS.toNextTest();
@@ -110,7 +110,7 @@ const allTests: Array<Test> = [
         getHtml: htmlFromFile(test6),
     },
     {
-        id: 6,
+        id: -1,
         onHtmlMessage: function(message) {
             if (message == "right") {
                 GS.toNextTest();
@@ -121,16 +121,12 @@ const allTests: Array<Test> = [
         getHtml: htmlFromFile(test7),
     },
     {
-        id: 7,
+        id: -1,
         onHtmlMessage: GS.toNextTest,
         getHtml: htmlFromFile(testend),
     }
 ];
 
-if (process.env.NODE_ENV !== 'production') {
-    for (var i = 0; i < allTests.length; i++) {
-        if (allTests[i].id != i) {
-            throw new Error("test array out of sync");
-        }
-    }
+for (var i = 0; i < allTests.length; i++) {
+    allTests[i].id = i;
 }
