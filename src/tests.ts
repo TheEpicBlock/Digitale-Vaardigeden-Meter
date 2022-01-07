@@ -6,6 +6,7 @@ import test3 from './tests/3.html'
 import test4 from './tests/4.html'
 import test6 from './tests/6.html'
 import test7 from './tests/7.html'
+import test8 from './tests/8.html'
 import testend from './tests/end.html'
 
 export interface Test {
@@ -19,7 +20,7 @@ export function getById(id: number): Test {
 }
 
 export function getFirstTest(): Test {
-    return allTests[0];
+    return allTests[7];
 }
 
 function htmlFromFile(file: string) {
@@ -119,6 +120,17 @@ const allTests: Array<Test> = [
             }
         },
         getHtml: htmlFromFile(test7),
+    },
+    { // Safe link
+        id: -1,
+        onHtmlMessage: function(message) {
+            if (message == "right") {
+                GS.toNextTest();
+            } else if (message == "wrong"){
+                // TODO
+            }
+        },
+        getHtml: htmlFromFile(test8),
     },
     {
         id: -1,
