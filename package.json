@@ -29,5 +29,10 @@
     "webpack-cli": "^4.9.1",
     "webpack-dev-server": "^4.4.0",
     "webpack-merge": "^5.8.0"
+  },
+  "dependencies": {
+    "@zxcvbn-ts/core": "^1.2.0",
+    "@zxcvbn-ts/language-common": "^1.0.2",
+    "@zxcvbn-ts/language-nl-be": "^1.2.0"
   }
 }

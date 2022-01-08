@@ -47,11 +47,12 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: 'bundle.js',
     libraryTarget: 'var',
     library: 'Main',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    filename: "[name].bundle.js",
+    chunkFilename: "[name].chunk.js",
   },
   optimization: {
     minimizer: [

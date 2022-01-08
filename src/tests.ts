@@ -1,3 +1,5 @@
+import { zxcvbn, ZxcvbnOptions } from '@zxcvbn-ts/core'
+
 import * as GS from './globalstate'
 import test0 from './tests/0.html'
 import test1 from './tests/1.html'
@@ -7,6 +9,7 @@ import test4 from './tests/4.html'
 import test6 from './tests/6.html'
 import test7 from './tests/7.html'
 import test8 from './tests/8.html'
+import test9 from './tests/9.html'
 import testend from './tests/end.html'
 
 export interface Test {
@@ -20,7 +23,7 @@ export function getById(id: number): Test {
 }
 
 export function getFirstTest(): Test {
-    return allTests[7];
+    return allTests[5];
 }
 
 function htmlFromFile(file: string) {
@@ -44,6 +47,34 @@ function testElementValue(id: string, expected: string, ignoreTrailingDot: boole
         }
         return content === expected;
     }
+}
+
+async function setZxcvbnOptions() {
+    const zxcvbnCommonPackage = (await import(/* webpackChunkName: "zxcvbnCommonPackage" */ '@zxcvbn-ts/language-common')).default;
+    
+    const options = {
+        graphs: zxcvbnCommonPackage.adjacencyGraphs,
+        dictionary: {
+            ...zxcvbnCommonPackage.dictionary,
+            custom: ['test', 'digi', 'vaardigheden'],
+        },
+    }
+    
+    ZxcvbnOptions.setOptions(options);
+    
+    const zxcvbnNlBePackage = (await import(/* webpackChunkName: "zxcvbnNlBePackage" */ '@zxcvbn-ts/language-nl-be')).default;
+    
+    const options2 = {
+        translations: zxcvbnNlBePackage.translations,
+        graphs: zxcvbnCommonPackage.adjacencyGraphs,
+        dictionary: {
+            ...zxcvbnCommonPackage.dictionary,
+            ...zxcvbnNlBePackage.dictionary,
+            custom: ['test', 'digi', 'vaardigheden'],
+        },
+    }
+    
+    ZxcvbnOptions.setOptions(options2);
 }
 
 const allTests: Array<Test> = [
@@ -119,7 +150,10 @@ const allTests: Array<Test> = [
                 // TODO
             }
         },
-        getHtml: htmlFromFile(test7),
+        getHtml: function() {
+            setZxcvbnOptions(); // Already start loading these for the password test
+            return htmlFromFile(test7)();
+        },
     },
     { // Safe link
         id: -1,
@@ -131,6 +165,20 @@ const allTests: Array<Test> = [
             }
         },
         getHtml: htmlFromFile(test8),
+    },
+    { // Password
+        id: -1,
+        onHtmlMessage: async function(message) {
+            var elem = document.getElementById("pw-input");
+            if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
+                var output = await zxcvbn(elem.value);
+                console.log(output)
+                if (output.score >= 3) {
+                    GS.toNextTest();
+                }
+            }
+        },
+        getHtml: htmlFromFile(test9),
     },
     {
         id: -1,
