@@ -61,14 +61,10 @@ export class TestState implements State  {
     }
     
     async onHtmlMessage(msg: string) {
-        switch (await this.test.checkConditions(msg)) {
-            case Tests.TestResult.Success:
-            case Tests.TestResult.QuiteGood:
-            case Tests.TestResult.Fail:
-                GS.toNextTest();
-                break;
-            case Tests.TestResult.TryAgain:
-                break;
+        var result = await this.test.checkConditions(msg);
+        GS.saveTestResult(this.test.id, result);
+        if (result != Tests.TestResult.TryAgain) {
+            GS.toNextTest();
         }
     }
 }

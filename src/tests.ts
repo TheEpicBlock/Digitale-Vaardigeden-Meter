@@ -12,7 +12,7 @@ import test8 from './tests/8.html'
 import test9 from './tests/9.html'
 import testend from './tests/end.html'
 
-export enum TestResult {
+export const enum TestResult {
     Success,
     QuiteGood,
     Fail,
@@ -28,6 +28,10 @@ export interface Test {
 
 export function getById(id: number): Test {
     if (allTests[id].id = id) return allTests[id];
+}
+
+export function getAmountOfTests(): number {
+    return allTests.length;
 }
 
 export function getFirstTest(): Test {
