@@ -41,6 +41,10 @@ body {
     }
 }
 
+area {
+    cursor: pointer;
+}
+
 $fade-time: 2s;
 
 .fading-in {
