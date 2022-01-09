@@ -82,12 +82,10 @@ async function unconditionalCheck(message: string) {
 
 const allTests: Array<Test> = [
     { // Simple click test
-        id: -1,
         checkConditions: unconditionalCheck,
         html: test0,
     },
     { // Open chrome
-        id: -1,
         checkConditions: async function(message: string) {
             if (message == "continue") {
                 return TestResult.Success;
@@ -103,7 +101,6 @@ const allTests: Array<Test> = [
         html: test1,
     },
     { // Gmail
-        id: -1,
         checkConditions: async function(message: string) {
             var rec = testElementValue("reciever", "fpcvanmesdag@vanmesdag.nl", false);
             var subj = testElementValue("subject", "hallo", true);
@@ -117,12 +114,10 @@ const allTests: Array<Test> = [
         html: test2,
     },
     { // Google
-        id: -1,
         checkConditions: unconditionalCheck,
         html: test3,
     },
     {
-        id: -1,
         checkConditions: async function(message: string) {
             var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
             var b = testElementValue("reisplanner-b", "zuiderdiep", true);
@@ -131,14 +126,12 @@ const allTests: Array<Test> = [
         html: test4,
     },
     {
-        id: -1,
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test6,
     },
     {
-        id: -1,
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
@@ -148,14 +141,12 @@ const allTests: Array<Test> = [
         }
     },
     { // Safe link
-        id: -1,
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test8,
     },
     { // Password
-        id: -1,
         checkConditions: async function(message: string) {
             var elem = document.getElementById("pw-input");
             if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
