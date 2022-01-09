@@ -3,7 +3,7 @@ import * as Animate from './animate'
 import * as GS from './globalstate'
 
 export interface State {
-    toUrlString(): String
+    toUrlString(): string
     setVisibility(animate: boolean, visibility: boolean): void
     onHtmlMessage(msg: String): void
 }
@@ -14,7 +14,7 @@ export class StartState implements State {
     constructor() {
     }
     
-    toUrlString(): String {
+    toUrlString(): string {
         return "";
     }
     
@@ -22,7 +22,7 @@ export class StartState implements State {
         Animate.activateOrDeactivateElement(document.getElementById("start"), animate, visibility);
     }
     
-    onHtmlMessage(msg: String) {
+    onHtmlMessage(msg: string) {
         GS.switchState(new TestState(Tests.getFirstTest()));
     }
 }
@@ -37,7 +37,7 @@ export class TestState implements State  {
         this.htmlRep = null;
     }
     
-    toUrlString(): String {
+    toUrlString(): string {
         return "t"+this.test.id;
     }
     
@@ -53,13 +53,15 @@ export class TestState implements State  {
         }
     }
     
-    onHtmlMessage(msg: String) {
+    onHtmlMessage(msg: string) {
         this.test.onHtmlMessage(msg);
     }
 }
 
-export function fromUrlString(str: String): State {
-    if (str.startsWith("f") && str.length > 2) {
-        return new TestState(Tests.getById(parseInt(str.substring(1), 16)))
+export function fromUrlString(str: string): State {
+    if (str.startsWith("t") && str.length >= 2) {
+        return new TestState(Tests.getById(parseInt(str.substring(1), 16)));
+    } else {
+        return new StartState();
     }
 }
