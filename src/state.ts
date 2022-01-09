@@ -43,17 +43,18 @@ export class ResultState implements State {
         // Render results
         var resultElement = document.getElementById("result-container");
         var correct = GS.getGlobalProgress().countCorrect();
-        var moduleNum = -1;
-        if (correct > 0 && correct <=3) {
-            moduleNum = 1;
-        } else if (correct <= 6) {
-            moduleNum = 2;
-        } else {
-            moduleNum = 3;
-        }
         
         var module = document.createElement('h1');
-        module.textContent = "Resultaat: module "+moduleNum;
+        if (correct > 0 && correct <=3) {
+            module.textContent = "Resultaat: module 1";
+        } else if (correct <= 6) {
+            module.textContent = "Resultaat: module 2";
+        } else if (correct < Tests.getTests().length) {
+            module.textContent = "Resultaat: module 3";
+        } else if (correct == Tests.getTests().length) {
+            module.textContent = "Resultaat: oefenen bij SJD";
+        }
+        
         resultElement.append(module);
         
         for (var i in Tests.getTests()) {
