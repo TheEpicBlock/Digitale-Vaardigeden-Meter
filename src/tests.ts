@@ -10,7 +10,6 @@ import test6 from './tests/6.html'
 import test7 from './tests/7.html'
 import test8 from './tests/8.html'
 import test9 from './tests/9.html'
-import testend from './tests/end.html'
 
 export const enum TestResult {
     Success,
@@ -179,10 +178,6 @@ const allTests: Array<Test> = [
         onLoad: function() {
             setZxcvbnOptions(); // Ensure they're loaded
         }
-    },
-    {
-        checkConditions: unconditionalCheck,
-        html: testend,
     }
 ].map((obj, i) => {
     var onload;

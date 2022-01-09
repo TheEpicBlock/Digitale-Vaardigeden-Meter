@@ -1,4 +1,5 @@
 import * as Tests from './tests'
+import { TestResult } from './tests'
 import * as States from './state'
 import { ProgressTracker } from './progresstracker'
 
@@ -38,8 +39,22 @@ export function toNextTest() {
     }
 }
 
-export function saveTestResult(id: number, result: Tests.TestResult) {
+export function saveTestResult(id: number, result: TestResult) {
     globalProgress.addToTracker(id, result);
+    
+    if (id == Tests.getAmountOfTests()-1) {
+        switchState(new States.ResultState());
+    }
+    
+    if (id >= 2) {
+        if (globalProgress.get(id) == TestResult.Fail && globalProgress.get(id-1) == TestResult.Fail && globalProgress.get(id-2) == TestResult.Fail) {
+            switchState(new States.ResultState());
+        }
+    }
+    
+    if (result != TestResult.TryAgain) {
+        toNextTest();
+    }
 }
 
 function saveStateToUrl() {

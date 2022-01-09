@@ -15,6 +15,10 @@ export class ProgressTracker {
         }
     }
     
+    get(id: number): TestResult {
+        return this.results[id];
+    }
+    
     addToTracker(id: number, result: TestResult) {
         this.results[id] = result;
     }

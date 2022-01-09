@@ -15,7 +15,7 @@ export class StartState implements State {
     }
     
     toUrlString(): string {
-        return "";
+        return "s";
     }
     
     setVisibility(animate: boolean, visibility: boolean) {
@@ -24,6 +24,24 @@ export class StartState implements State {
     
     onHtmlMessage(msg: string) {
         GS.switchState(new TestState(Tests.getFirstTest()));
+    }
+}
+
+export class ResultState implements State {
+    type: "result"
+    
+    constructor() {
+    }
+    
+    toUrlString(): string {
+        return "r";
+    }
+    
+    setVisibility(animate: boolean, visibility: boolean) {
+        Animate.activateOrDeactivateElement(document.getElementById("result"), animate, visibility);
+    }
+    
+    onHtmlMessage(msg: string) {
     }
 }
 
@@ -64,9 +82,6 @@ export class TestState implements State  {
     async onHtmlMessage(msg: string) {
         var result = await this.test.checkConditions(msg);
         GS.saveTestResult(this.test.id, result);
-        if (result != Tests.TestResult.TryAgain) {
-            GS.toNextTest();
-        }
     }
 }
 
