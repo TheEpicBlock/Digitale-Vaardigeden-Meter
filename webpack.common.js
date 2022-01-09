@@ -21,7 +21,7 @@ module.exports = {
       {
         test: /\.s?css$/i,
         use: [
-          { loader: MiniCssExtractPlugin.loader, options: { publicPath: '' } },
+          MiniCssExtractPlugin.loader, 
           { loader: "css-loader", options: { sourceMap: true } },
           { loader: "sass-loader", options: { sourceMap: true } },
         ],
@@ -47,6 +47,7 @@ module.exports = {
     extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
+    publicPath: process.env.ASSET_PATH || '/',
     libraryTarget: 'var',
     library: 'Main',
     path: path.resolve(__dirname, 'dist'),
