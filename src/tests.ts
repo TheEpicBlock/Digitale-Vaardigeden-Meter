@@ -38,18 +38,6 @@ export function getFirstTest(): Test {
     return allTests[0];
 }
 
-function htmlFromFile(file: string) {
-    return () => {
-        var base = document.createElement("div");
-        var margin = document.createElement("div");
-        margin.innerHTML = file;
-        margin.className = "margin-wrapper";
-        base.append(margin);
-        base.className = "state";
-        return base;
-    }
-}
-
 function testElementValue(id: string, expected: string, ignoreTrailingDot: boolean): boolean {
     var elem = document.getElementById(id);
     if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
@@ -173,9 +161,11 @@ const allTests: Array<Test> = [
             var elem = document.getElementById("pw-input");
             if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
                 var output = await zxcvbn(elem.value);
+                console.log(output);
                 switch (output.score) {
                     case 0:
                     case 1:
+                    case 2:
                         return TestResult.Fail;
                     case 3:
                         return TestResult.QuiteGood;

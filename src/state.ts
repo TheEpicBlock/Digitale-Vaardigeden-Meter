@@ -55,6 +55,7 @@ export class TestState implements State  {
             testhtml.className = "state";
             
             main.append(testhtml);
+            this.test.onLoad();
             Animate.activateOrDeactivateElement(testhtml, animate, visibility);
             this.htmlRep = testhtml;
         }
