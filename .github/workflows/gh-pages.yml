@@ -8,6 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-20.04
+    env:
+        ASSET_PATH: "/Digitale-Vaardigheden-Meter/"
+        CANONICAL_URL: "https://github.com/TheEpicBlock/Digitale-Vaardigheden-Meter"
     steps:
       - uses: actions/checkout@v2
       
