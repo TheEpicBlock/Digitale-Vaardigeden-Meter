@@ -56,6 +56,7 @@ function loadStateFromUrl() {
         globalProgress = new ProgressTracker();
         globalProgress.importUrlString(parts[1]);
         switchStateWithoutAnimation(state);
+        saveStateToUrl();
     } else {
         switchStateWithoutAnimation(get());
     }

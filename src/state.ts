@@ -38,7 +38,7 @@ export class TestState implements State  {
     }
     
     toUrlString(): string {
-        return "t"+this.test.id;
+        return "t"+btoa(''+this.test.id);
     }
     
     setVisibility(animate: boolean, visibility: boolean) {
@@ -72,7 +72,7 @@ export class TestState implements State  {
 
 export function fromUrlString(str: string): State {
     if (str.startsWith("t") && str.length >= 2) {
-        return new TestState(Tests.getById(parseInt(str.substring(1), 16)));
+        return new TestState(Tests.getById(parseInt(atob(str.substring(1)), 10)));
     } else {
         return new StartState();
     }

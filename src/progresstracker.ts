@@ -8,9 +8,10 @@ export class ProgressTracker {
     }
     
     importUrlString(urlString: string) {
-        var split = urlString.split("")
-        for (var i in split) {
-            this.results[i] = parseInt(split[i]);
+        urlString = atob(urlString);
+        var len = urlString.length;
+        for (var i = 0; i < urlString.length; i++) {
+            this.results[i] = urlString.charCodeAt(i);
         }
     }
     
@@ -19,6 +20,8 @@ export class ProgressTracker {
     }
     
     toUrlString(): string {
-        return this.results.join('');
+        return btoa(this.results.map(i => String.fromCharCode(i)).join(''))
+        return Buffer.from(this.results).toString('base64');
+        return btoa(this.results.join(''));
     }
 }
