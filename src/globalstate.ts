@@ -6,6 +6,10 @@ import { ProgressTracker } from './progresstracker'
 var globalState: States.State;
 var globalProgress: ProgressTracker = new ProgressTracker();
 
+export function getGlobalProgress() {
+    return globalProgress;
+}
+
 export function get() {
     return globalState;
 }

@@ -19,6 +19,17 @@ export class ProgressTracker {
         return this.results[id];
     }
     
+    countCorrect(): number {
+        var c = 0;
+        for (var i = 0; i < this.results.length; i++) {
+            var t = this.get(i);
+            if (t == TestResult.Success || t == TestResult.QuiteGood) {
+                c += 1;
+            }
+        }
+        return c;
+    }
+    
     addToTracker(id: number, result: TestResult) {
         this.results[id] = result;
     }

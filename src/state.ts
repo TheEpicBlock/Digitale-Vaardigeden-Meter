@@ -1,6 +1,7 @@
 import * as Tests from './tests'
 import * as Animate from './animate'
 import * as GS from './globalstate'
+import { ProgressTracker } from './progresstracker'
 
 export interface State {
     toUrlString(): string
@@ -39,6 +40,21 @@ export class ResultState implements State {
     
     setVisibility(animate: boolean, visibility: boolean) {
         Animate.activateOrDeactivateElement(document.getElementById("result"), animate, visibility);
+        // Render results
+        var resultElement = document.getElementById("result-container");
+        var correct = GS.getGlobalProgress().countCorrect();
+        var moduleNum = -1;
+        if (correct > 0 && correct <=3) {
+            moduleNum = 1;
+        } else if (correct <= 6) {
+            moduleNum = 2;
+        } else {
+            moduleNum = 3;
+        }
+        
+        var module = document.createElement('div');
+        module.textContent = "Module "+moduleNum;
+        resultElement.append(module);
     }
     
     onHtmlMessage(msg: string) {
@@ -88,6 +104,8 @@ export class TestState implements State  {
 export function fromUrlString(str: string): State {
     if (str.startsWith("t") && str.length >= 2) {
         return new TestState(Tests.getById(parseInt(atob(str.substring(1)), 10)));
+    } else if (str.startsWith("r")) {
+        return new ResultState();
     } else {
         return new StartState();
     }
