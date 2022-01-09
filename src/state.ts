@@ -46,15 +46,30 @@ export class TestState implements State  {
             Animate.activateOrDeactivateElement(this.htmlRep, animate, visibility);
         } else {
             var main = document.getElementById("main");
-            var html = this.test.getHtml();
-            main.append(html);
-            Animate.activateOrDeactivateElement(html, animate, visibility);
-            this.htmlRep = html;
+            
+            var testhtml = document.createElement("div");
+            var margin = document.createElement("div");
+            margin.innerHTML = this.test.html;
+            margin.className = "margin-wrapper";
+            testhtml.append(margin);
+            testhtml.className = "state";
+            
+            main.append(testhtml);
+            Animate.activateOrDeactivateElement(testhtml, animate, visibility);
+            this.htmlRep = testhtml;
         }
     }
     
-    onHtmlMessage(msg: string) {
-        this.test.onHtmlMessage(msg);
+    async onHtmlMessage(msg: string) {
+        switch (await this.test.checkConditions(msg)) {
+            case Tests.TestResult.Success:
+            case Tests.TestResult.QuiteGood:
+            case Tests.TestResult.Fail:
+                GS.toNextTest();
+                break;
+            case Tests.TestResult.TryAgain:
+                break;
+        }
     }
 }
 

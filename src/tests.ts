@@ -12,10 +12,18 @@ import test8 from './tests/8.html'
 import test9 from './tests/9.html'
 import testend from './tests/end.html'
 
+export enum TestResult {
+    Success,
+    QuiteGood,
+    Fail,
+    TryAgain,
+}
+
 export interface Test {
-    id: number
-    onHtmlMessage(msg: String): void,
-    getHtml(): HTMLElement,
+    id: number;
+    checkConditions(msg: String): Promise<TestResult>;
+    onLoad(): void;
+    html: string;
 }
 
 export function getById(id: number): Test {
@@ -77,17 +85,21 @@ async function setZxcvbnOptions() {
     ZxcvbnOptions.setOptions(options2);
 }
 
+async function unconditionalCheck(message: string) {
+    return TestResult.Success;
+}
+
 const allTests: Array<Test> = [
     { // Simple click test
         id: -1,
-        onHtmlMessage: GS.toNextTest,
-        getHtml: htmlFromFile(test0),
+        checkConditions: unconditionalCheck,
+        html: test0,
     },
     { // Open chrome
         id: -1,
-        onHtmlMessage: function(message) {
+        checkConditions: async function(message: string) {
             if (message == "continue") {
-                GS.toNextTest();
+                return TestResult.Success;
             } else if (message == "start") {
                 document.getElementById('desktop').style.display = "none";
                 document.getElementById('start-menu').style.display = "flex";
@@ -95,98 +107,100 @@ const allTests: Array<Test> = [
                 document.getElementById('desktop').style.display = "flex";
                 document.getElementById('start-menu').style.display = "none";
             }
+            return TestResult.TryAgain;
         },
-        getHtml: htmlFromFile(test1),
+        html: test1,
     },
     { // Gmail
         id: -1,
-        onHtmlMessage: function(message) {
+        checkConditions: async function(message: string) {
             var rec = testElementValue("reciever", "fpcvanmesdag@vanmesdag.nl", false);
             var subj = testElementValue("subject", "hallo", true);
             var cont = testElementValue("content", "dit is mijn bericht", true);
             if (rec && subj && cont) {
-                GS.toNextTest();
+                return TestResult.Success;
             } else {
-                // TODO
+                return TestResult.Fail;
             }
         },
-        getHtml: htmlFromFile(test2),
+        html: test2,
     },
     { // Google
         id: -1,
-        onHtmlMessage: GS.toNextTest,
-        getHtml: htmlFromFile(test3),
+        checkConditions: unconditionalCheck,
+        html: test3,
     },
     {
         id: -1,
-        onHtmlMessage: function(message) {
+        checkConditions: async function(message: string) {
             var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
             var b = testElementValue("reisplanner-b", "zuiderdiep", true);
-            if (a && b) {
-                GS.toNextTest();
-            } else {
-                // TODO
-            }
+            return a && b ? TestResult.Success : TestResult.Fail;
         },
-        getHtml: htmlFromFile(test4),
+        html: test4,
     },
     {
         id: -1,
-        onHtmlMessage: function(message) {
-            if (message == "right") {
-                GS.toNextTest();
-            } else if (message == "wrong"){
-                // TODO
-            }
+        checkConditions: async function(message: string) {
+            return message == "right" ? TestResult.Success : TestResult.Fail;
         },
-        getHtml: htmlFromFile(test6),
+        html: test6,
     },
     {
         id: -1,
-        onHtmlMessage: function(message) {
-            if (message == "right") {
-                GS.toNextTest();
-            } else if (message == "wrong"){
-                // TODO
-            }
+        checkConditions: async function(message: string) {
+            return message == "right" ? TestResult.Success : TestResult.Fail;
         },
-        getHtml: function() {
+        html: test7,
+        onLoad: function() {
             setZxcvbnOptions(); // Already start loading these for the password test
-            return htmlFromFile(test7)();
-        },
+        }
     },
     { // Safe link
         id: -1,
-        onHtmlMessage: function(message) {
-            if (message == "right") {
-                GS.toNextTest();
-            } else if (message == "wrong"){
-                // TODO
-            }
+        checkConditions: async function(message: string) {
+            return message == "right" ? TestResult.Success : TestResult.Fail;
         },
-        getHtml: htmlFromFile(test8),
+        html: test8,
     },
     { // Password
         id: -1,
-        onHtmlMessage: async function(message) {
+        checkConditions: async function(message: string) {
             var elem = document.getElementById("pw-input");
             if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
                 var output = await zxcvbn(elem.value);
-                console.log(output)
-                if (output.score >= 3) {
-                    GS.toNextTest();
+                switch (output.score) {
+                    case 0:
+                    case 1:
+                        return TestResult.Fail;
+                    case 3:
+                        return TestResult.QuiteGood;
+                    case 4:
+                    default:
+                        return TestResult.Success;
                 }
             }
         },
-        getHtml: htmlFromFile(test9),
+        html: test9,
+        onLoad: function() {
+            setZxcvbnOptions(); // Ensure they're loaded
+        }
     },
     {
-        id: -1,
-        onHtmlMessage: GS.toNextTest,
-        getHtml: htmlFromFile(testend),
+        checkConditions: unconditionalCheck,
+        html: testend,
     }
-];
-
-for (var i = 0; i < allTests.length; i++) {
-    allTests[i].id = i;
-}
+].map((obj, i) => {
+    var onload;
+    if (obj.onLoad != undefined) {
+        onload = obj.onLoad;
+    } else {
+        onload = function () {};
+    }
+    return {
+        id: i,
+        checkConditions: obj.checkConditions,
+        html: obj.html,
+        onLoad: onload,
+    }
+});
