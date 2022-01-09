@@ -23,7 +23,7 @@ export function getById(id: number): Test {
 }
 
 export function getFirstTest(): Test {
-    return allTests[5];
+    return allTests[0];
 }
 
 function htmlFromFile(file: string) {
