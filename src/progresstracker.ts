@@ -1,10 +1,10 @@
-import { TestResult, getAmountOfTests } from './tests'
+import { TestResult, getTests } from './tests'
 
 export class ProgressTracker {
     results: TestResult[]
     
     constructor() {
-        this.results = new Array(getAmountOfTests());
+        this.results = new Array(getTests().length);
     }
     
     importUrlString(urlString: string) {

@@ -20,6 +20,7 @@ export const enum TestResult {
 
 export interface Test {
     id: number;
+    name: string;
     checkConditions(msg: String): Promise<TestResult>;
     onLoad(): void;
     html: string;
@@ -29,8 +30,8 @@ export function getById(id: number): Test {
     if (allTests[id].id = id) return allTests[id];
 }
 
-export function getAmountOfTests(): number {
-    return allTests.length;
+export function getTests(): Array<Test> {
+    return allTests;
 }
 
 export function getFirstTest(): Test {
@@ -81,11 +82,13 @@ async function unconditionalCheck(message: string) {
 }
 
 const allTests: Array<Test> = [
-    { // Simple click test
+    {
+        name: "Klikken",
         checkConditions: unconditionalCheck,
         html: test0,
     },
-    { // Open chrome
+    {
+        name: "Chrome openen",
         checkConditions: async function(message: string) {
             if (message == "continue") {
                 return TestResult.Success;
@@ -100,7 +103,8 @@ const allTests: Array<Test> = [
         },
         html: test1,
     },
-    { // Gmail
+    {
+        name: "Email versturen",
         checkConditions: async function(message: string) {
             var rec = testElementValue("reciever", "fpcvanmesdag@vanmesdag.nl", false);
             var subj = testElementValue("subject", "hallo", true);
@@ -113,11 +117,13 @@ const allTests: Array<Test> = [
         },
         html: test2,
     },
-    { // Google
+    {
+        name: "Google resultaten begrijpen",
         checkConditions: unconditionalCheck,
         html: test3,
     },
     {
+        name: "Reisplanner gebruiken",
         checkConditions: async function(message: string) {
             var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
             var b = testElementValue("reisplanner-b", "zuiderdiep", true);
@@ -126,12 +132,14 @@ const allTests: Array<Test> = [
         html: test4,
     },
     {
+        name: "Budgetteren",
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test6,
     },
     {
+        name: "OV-chipkaart opladen",
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
@@ -140,13 +148,15 @@ const allTests: Array<Test> = [
             setZxcvbnOptions(); // Already start loading these for the password test
         }
     },
-    { // Safe link
+    {
+        name: "Spam email identificeren",
         checkConditions: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test8,
     },
-    { // Password
+    {
+        name: "Een veilig wachtwoord bedenken",
         checkConditions: async function(message: string) {
             var elem = document.getElementById("pw-input");
             if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
@@ -179,6 +189,7 @@ const allTests: Array<Test> = [
     }
     return {
         id: i,
+        name: obj.name,
         checkConditions: obj.checkConditions,
         html: obj.html,
         onLoad: onload,

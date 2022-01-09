@@ -52,12 +52,35 @@ export class ResultState implements State {
             moduleNum = 3;
         }
         
-        var module = document.createElement('div');
-        module.textContent = "Module "+moduleNum;
+        var module = document.createElement('h1');
+        module.textContent = "Resultaat: module "+moduleNum;
         resultElement.append(module);
+        
+        for (var i in Tests.getTests()) {
+            var test = Tests.getTests()[i];
+            var div = document.createElement('div');
+            div.textContent = test.name;
+            div.className = "test-result";
+            switch (GS.getGlobalProgress().get(test.id)) {
+                case Tests.TestResult.Success:
+                    div.className += " good-test";
+                    break;
+                case Tests.TestResult.QuiteGood:
+                    div.className += " quitegood-test";
+                    break;
+                case Tests.TestResult.Fail:
+                    div.className += " fail-test";
+                    break;
+                default:
+                    div.className += " unknown-test";
+                    break;
+            }
+            resultElement.append(div);
+        }
     }
     
     onHtmlMessage(msg: string) {
+        window.location.assign(window.location.pathname);
     }
 }
 

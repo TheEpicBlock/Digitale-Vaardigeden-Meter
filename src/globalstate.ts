@@ -46,7 +46,7 @@ export function toNextTest() {
 export function saveTestResult(id: number, result: TestResult) {
     globalProgress.addToTracker(id, result);
     
-    if (id == Tests.getAmountOfTests()-1) {
+    if (id == Tests.getTests().length-1) {
         switchState(new States.ResultState());
     }
     

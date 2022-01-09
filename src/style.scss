@@ -221,8 +221,29 @@ button {
     margin-bottom: 5mm;
 }
 
-// End
+// Results
 
-.end-header {
-    font-size: 300%;
+.test-result:before {
+    content: "";
+    width: 2mm;
+    height: 1em;
+    display: inline-block;
+    margin-right: 1mm;
+    transform: translateY(1px);
+}
+
+.good-test:before {
+    background-color: #84d824;
+}
+
+.quitegood-test:before {
+    background-color: #eaba1c;
+}
+
+.fail-test:before {
+    background-color: #d3320e;
+}
+
+.unknown-test:before {
+    background-color: #83877f;
 }
