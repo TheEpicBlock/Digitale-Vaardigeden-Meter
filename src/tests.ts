@@ -11,6 +11,7 @@ import test6 from './assets/tests/6.html'
 import test7 from './assets/tests/7.html'
 import test8 from './assets/tests/8.html'
 import test9 from './assets/tests/9.html'
+import test10 from './assets/tests/10.html'
 
 export const enum TestResult {
     Success,
@@ -209,7 +210,14 @@ const allTests: Array<Test> = [
         onLoad: function() {
             setZxcvbnOptions(); // Ensure they're loaded
         }
-    }
+    },
+    {
+        name: "Veilige webpagina identificeren",
+        checkResult: async function(message: string) {
+            return message == "right" ? TestResult.Success : TestResult.Fail;
+        },
+        html: test10,
+    },
 ].map((obj, i) => {
     var onload;
     if (obj.onLoad != undefined) {
