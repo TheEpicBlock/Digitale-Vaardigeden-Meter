@@ -2,13 +2,13 @@ import * as Tests from './tests'
 import * as Animate from './animate'
 import * as GS from './globalstate'
 
-export interface State {
+export interface PageState {
     toUrlString(): string
     setVisibility(animate: boolean, visibility: boolean): void
     onHtmlMessage(msg: String): void
 }
 
-export class StartState implements State {
+export class StartState implements PageState {
     type: "start"
     
     constructor() {
@@ -27,7 +27,7 @@ export class StartState implements State {
     }
 }
 
-export class ResultState implements State {
+export class ResultState implements PageState {
     type: "result"
     
     constructor() {
@@ -84,7 +84,7 @@ export class ResultState implements State {
     }
 }
 
-export class TestState implements State  {
+export class TestState implements PageState  {
     type: "test"
     test: Tests.Test
     htmlRep: HTMLElement | null // The Html representation insided the dom
@@ -124,7 +124,7 @@ export class TestState implements State  {
     }
 }
 
-export function fromUrlString(str: string): State {
+export function fromUrlString(str: string): PageState {
     if (str.startsWith("t") && str.length >= 2) {
         return new TestState(Tests.getById(parseInt(atob(str.substring(1)), 10)));
     } else if (str.startsWith("r")) {

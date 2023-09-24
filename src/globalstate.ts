@@ -1,9 +1,9 @@
 import * as Tests from './tests'
 import { TestResult } from './tests'
-import * as States from './state'
+import * as States from './pagestate'
 import { ProgressTracker } from './progresstracker'
 
-var globalState: States.State;
+var globalState: States.PageState;
 var globalProgress: ProgressTracker = new ProgressTracker();
 
 export function getGlobalProgress() {
@@ -14,18 +14,18 @@ export function get() {
     return globalState;
 }
 
-export function set(state: States.State) {
+export function set(state: States.PageState) {
     globalState = state;
 }
 
-export function switchState(newState: States.State) {
+export function switchState(newState: States.PageState) {
     get().setVisibility(true, false);
     newState.setVisibility(true, true);
     set(newState);
     saveStateToUrl();
 }
 
-function switchStateWithoutAnimation(newState: States.State) {
+function switchStateWithoutAnimation(newState: States.PageState) {
     get().setVisibility(false, false);
     newState.setVisibility(false, true);
     set(newState);
