@@ -8,6 +8,8 @@
     "jsx": "react",
     "allowJs": true,
     "moduleResolution": "node",
-    "importHelpers": true
+    "importHelpers": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   }
 }

@@ -1,0 +1,105 @@
+[
+    {
+        "name": "Ad link small",
+        "coords": [173,182,360,211],
+        "result": "success"
+    },
+    {
+        "name": "Ad link",
+        "coords": [177,211,514,232],
+        "alt": "Bol.com - De winkel van ons allemaal",
+        "result": "success"
+    },
+    {
+        "name": "Ad sublink",
+        "coords": [193,315,340,343],
+        "alt": "Cadeaubonnen",
+        "result": "quite_good"
+    },
+    {
+        "name": "Ad sublink",
+        "coords": [193,383,316,409],
+        "alt": "Select Deals",
+        "result": "quite_good"
+    },
+    {
+        "name": "Ad sublink",
+        "coords": [193,450,340,475],
+        "alt": "Cadeautips",
+        "result": "quite_good"
+    },
+    {
+        "name": "Ad sublink",
+        "coords": [193,516,390,541],
+        "alt": "Bol.com in coronatijd",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal link small",
+        "coords": [173,602,360,626],
+        "result": "success"
+    },
+    {
+        "name": "Normal link translate",
+        "coords": [338,602,492,621],
+        "alt": "Translate this page",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal link",
+        "coords": [177,626,514,650],
+        "alt": "De winkel van ons allemaal | bol.com",
+        "result": "success"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,712,298,735],
+        "alt": "Elektronica",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,778,267,804],
+        "alt": "Boeken",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,845,298,870],
+        "alt": "Speelgoed",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,913,330,935],
+        "alt": "Klantenservice",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,980,253,1002],
+        "alt": "Outlet",
+        "result": "quite_good"
+    },
+    {
+        "name": "Normal sublink",
+        "coords": [193,1043,253,1070],
+        "alt": "Artikelen van bol.com",
+        "result": "success"
+    },
+    {
+        "name": "Facebook",
+        "coords": [177,1166,580,1220],
+        "result": "fail"
+    },
+    {
+        "name": "LinkedIn",
+        "coords": [177,1291,580,1345],
+        "result": "fail"
+    },
+    {
+        "name": "Infobox",
+        "coords": [931,180,1302,1013],
+        "result": "fail"
+    }
+]

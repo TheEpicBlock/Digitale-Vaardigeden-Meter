@@ -1,9 +1,11 @@
 import { zxcvbn, ZxcvbnOptions } from '@zxcvbn-ts/core'
+import * as Main from './index'
 
 import test0 from './assets/tests/0.html'
 import test1 from './assets/tests/1.html'
 import test2 from './assets/tests/2.html'
 import test3 from './assets/tests/3.html'
+import test3config from './assets/tests/3.json'
 import test4 from './assets/tests/4.html'
 import test6 from './assets/tests/6.html'
 import test7 from './assets/tests/7.html'
@@ -124,8 +126,31 @@ const allTests: Array<Test> = [
     },
     {
         name: "Google resultaten begrijpen",
-        checkResult: unconditionalSuccess,
+        checkResult: async function(message: string) {
+            switch(message) {
+                case "success": return TestResult.Success;
+                case "quite_good": return TestResult.QuiteGood;
+                case "fail": return TestResult.Fail;
+            }
+        },
         html: test3,
+        onLoad: function() {
+            var toPopulate = document.getElementById("bol-buttons");
+            var imgHeight = 2401;
+            var imgWidth = 1748;
+            test3config.forEach(button => {
+                var buttonHtml = document.createElement("button");
+                buttonHtml.className = "invis-button"
+                buttonHtml.style.left = button.coords[0] / imgWidth * 100 + "%";
+                buttonHtml.style.top = button.coords[1] / imgHeight * 100 + "%";
+                buttonHtml.style.width = (button.coords[2] / imgWidth - button.coords[0] / imgWidth) * 100 + "%";
+                buttonHtml.style.height = (button.coords[3] / imgHeight - button.coords[1] / imgHeight) * 100 + "%";
+                buttonHtml.style.cursor = "pointer";
+                if (button.alt) buttonHtml.setAttribute("alt", button.alt);
+                buttonHtml.onclick = () => Main.sendMessage(button.result);
+                toPopulate.appendChild(buttonHtml);
+            });
+        }
     },
     {
         name: "Reisplanner gebruiken",
