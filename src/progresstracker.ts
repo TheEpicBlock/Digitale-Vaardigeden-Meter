@@ -36,7 +36,5 @@ export class ProgressTracker {
     
     toUrlString(): string {
         return btoa(this.results.map(i => String.fromCharCode(i)).join(''))
-        return Buffer.from(this.results).toString('base64');
-        return btoa(this.results.join(''));
     }
 }
