@@ -1,6 +1,5 @@
 import { zxcvbn, ZxcvbnOptions } from '@zxcvbn-ts/core'
 
-import * as GS from './globalstate'
 import test0 from './tests/0.html'
 import test1 from './tests/1.html'
 import test2 from './tests/2.html'

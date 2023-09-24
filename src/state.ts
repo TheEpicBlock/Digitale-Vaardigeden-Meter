@@ -1,7 +1,6 @@
 import * as Tests from './tests'
 import * as Animate from './animate'
 import * as GS from './globalstate'
-import { ProgressTracker } from './progresstracker'
 
 export interface State {
     toUrlString(): string
