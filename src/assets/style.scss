@@ -91,18 +91,12 @@ button {
     padding: 1cm;
 }
 
-.continue-button {
-    position: absolute;
-    bottom: 20%;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-
-.centered-txt {
+.centered-block {
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
+    display: block;
 }
 
 .invis-button {
