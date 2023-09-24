@@ -27,7 +27,10 @@ export interface Test {
 }
 
 export function getById(id: number): Test {
-    if (allTests[id].id = id) return allTests[id];
+    if (allTests.length < id) {
+        throw new Error(`Invalid test id ${id}`);
+    }
+    return allTests[id];
 }
 
 export function getTests(): Array<Test> {
