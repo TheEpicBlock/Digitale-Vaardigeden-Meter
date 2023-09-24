@@ -119,7 +119,7 @@ export class TestState implements PageState  {
     }
     
     async onHtmlMessage(msg: string) {
-        var result = await this.test.checkConditions(msg);
+        var result = await this.test.checkResult(msg);
         GS.saveTestResult(this.test.id, result);
     }
 }

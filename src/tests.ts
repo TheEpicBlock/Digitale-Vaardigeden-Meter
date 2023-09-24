@@ -20,7 +20,10 @@ export const enum TestResult {
 export interface Test {
     id: number;
     name: string;
-    checkConditions(msg: String): Promise<TestResult>;
+    /**
+     * Grades how well the test was performed. Called when a html message is received
+     */
+    checkResult(msg: String): Promise<TestResult>;
     onLoad(): void;
     html: string;
 }
@@ -79,19 +82,19 @@ async function setZxcvbnOptions() {
     ZxcvbnOptions.setOptions(options2);
 }
 
-async function unconditionalCheck(message: string) {
+async function unconditionalSuccess(message: string) {
     return TestResult.Success;
 }
 
 const allTests: Array<Test> = [
     {
         name: "Klikken",
-        checkConditions: unconditionalCheck,
+        checkResult: unconditionalSuccess,
         html: test0,
     },
     {
         name: "Chrome openen",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             if (message == "continue") {
                 return TestResult.Success;
             } else if (message == "start") {
@@ -107,7 +110,7 @@ const allTests: Array<Test> = [
     },
     {
         name: "Email versturen",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             var rec = testElementValue("reciever", "fpcvanmesdag@vanmesdag.nl", false);
             var subj = testElementValue("subject", "hallo", true);
             var cont = testElementValue("content", "dit is mijn bericht", true);
@@ -121,12 +124,12 @@ const allTests: Array<Test> = [
     },
     {
         name: "Google resultaten begrijpen",
-        checkConditions: unconditionalCheck,
+        checkResult: unconditionalSuccess,
         html: test3,
     },
     {
         name: "Reisplanner gebruiken",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             var a = testElementValue("reisplanner-a", "groningen hoofdstation", true);
             var b = testElementValue("reisplanner-b", "zuiderdiep", true);
             return a && b ? TestResult.Success : TestResult.Fail;
@@ -135,14 +138,14 @@ const allTests: Array<Test> = [
     },
     {
         name: "Budgetteren",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test6,
     },
     {
         name: "OV-chipkaart opladen",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test7,
@@ -152,14 +155,14 @@ const allTests: Array<Test> = [
     },
     {
         name: "Spam email identificeren",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             return message == "right" ? TestResult.Success : TestResult.Fail;
         },
         html: test8,
     },
     {
         name: "Een veilig wachtwoord bedenken",
-        checkConditions: async function(message: string) {
+        checkResult: async function(message: string) {
             var elem = document.getElementById("pw-input");
             if (elem instanceof HTMLInputElement || elem instanceof HTMLTextAreaElement) {
                 var output = await zxcvbn(elem.value);
@@ -192,7 +195,7 @@ const allTests: Array<Test> = [
     return {
         id: i,
         name: obj.name,
-        checkConditions: obj.checkConditions,
+        checkResult: obj.checkResult,
         html: obj.html,
         onLoad: onload,
     }
