@@ -1,14 +1,14 @@
 import { zxcvbn, ZxcvbnOptions } from '@zxcvbn-ts/core'
 
-import test0 from './tests/0.html'
-import test1 from './tests/1.html'
-import test2 from './tests/2.html'
-import test3 from './tests/3.html'
-import test4 from './tests/4.html'
-import test6 from './tests/6.html'
-import test7 from './tests/7.html'
-import test8 from './tests/8.html'
-import test9 from './tests/9.html'
+import test0 from './assets/tests/0.html'
+import test1 from './assets/tests/1.html'
+import test2 from './assets/tests/2.html'
+import test3 from './assets/tests/3.html'
+import test4 from './assets/tests/4.html'
+import test6 from './assets/tests/6.html'
+import test7 from './assets/tests/7.html'
+import test8 from './assets/tests/8.html'
+import test9 from './assets/tests/9.html'
 
 export const enum TestResult {
     Success,

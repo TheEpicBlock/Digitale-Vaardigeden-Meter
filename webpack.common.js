@@ -36,7 +36,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Output Management',
       alwaysWriteToDisk: (process.env.DEV_SERVER == "true"),
-      template: 'src/index.ejs',
+      template: 'src/assets/index.ejs',
       inject: false,
       canonical_url: process.env.CANONICAL_URL,
     }),
