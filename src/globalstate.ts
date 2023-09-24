@@ -40,6 +40,8 @@ export function toNextTest() {
     var state = get();
     if (state instanceof States.TestState) {
         toTest(state.test.id+1);
+    } else {
+        throw new Error("Can't go to next test when not on a test page");
     }
 }
 
@@ -48,6 +50,8 @@ export function saveTestResult(id: number, result: TestResult) {
     
     if (id == Tests.getTests().length-1) {
         switchState(new States.ResultState());
+    } else if (result != TestResult.TryAgain) {
+        toNextTest();
     }
     
     if (id >= 2) {
@@ -56,9 +60,7 @@ export function saveTestResult(id: number, result: TestResult) {
         }
     }
     
-    if (result != TestResult.TryAgain) {
-        toNextTest();
-    }
+    
 }
 
 function saveStateToUrl() {

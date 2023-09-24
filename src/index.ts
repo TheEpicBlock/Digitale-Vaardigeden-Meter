@@ -8,3 +8,11 @@ import * as GS from './globalstate'
 export function sendMessage(msg: String) {
     GS.get().onHtmlMessage(msg);
 }
+
+/**
+ * Debug function, to be used from the console.
+ * Use as `Main.skipTo(x)`
+ */
+export function skipTo(test: number) {
+    GS.toTest(test);
+}
